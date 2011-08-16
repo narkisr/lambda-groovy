@@ -1,0 +1,3 @@
+[submodule "groovy-http-repl/ratpack"]
+	path = groovy-http-repl/ratpack
+	url = https://github.com/esumerfd/Ratpack.git
