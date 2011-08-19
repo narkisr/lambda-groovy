@@ -64,6 +64,8 @@
 
        def o = new Owner()
 
-       println o.say.metaClass.properties.collect{it.name}
+       println o.say.metaClass.properties.collect{
+         it.name
+       }
 
        println o.say.owner.class
