@@ -5,6 +5,7 @@
 
 * Introduction 
 * Literals, Lambdas, Operators
+* The GDK
 * Builders
 * MOP
 * AST transformations (Mixins, Delegation)
