@@ -68,4 +68,25 @@
          it.name
        }
 
-       println o.say.owner.class
+       println o.say.owner == o 
+       println o.say.delegate 
+
+<!SLIDE  execute>
+ 
+    @@@groovy
+       def say = {println m}
+       say.delegate = [m:2]
+       say()
+         
+<!SLIDE  execute>
+
+    @@@groovy
+       person = [name:"bob",last:"builder"]
+       person.with {
+	    println "${name}-${last}"
+       }
+       
+
+<!SLIDE  execute>
+
+# Operators #
