@@ -53,7 +53,7 @@
 # Groovy Builders #
 
 <!SLIDE  execute small>
-.notes Groovy builders use the builder pattern to construct all sorts of hierarchal tree structures, in this case a json string.
+.notes Groovy builders use the builder pattern to construct all sorts of hierarchal tree structures, in this case XML
 
     @@@groovy
     import groovy.xml.*
@@ -68,7 +68,7 @@
     println writer
 
 <!SLIDE  execute smaller>
-.notes Another example is constructing an http request.
+.notes Another use case is Swing UI
 
     @@@groovy
     import java.awt.FlowLayout 
