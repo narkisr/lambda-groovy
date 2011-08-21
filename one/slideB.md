@@ -52,43 +52,35 @@
 
 # Groovy Builders #
 
-<!SLIDE  execute>
+<!SLIDE  execute small>
 .notes Groovy builders use the builder pattern to construct all sorts of hierarchal tree structures, in this case a json string.
 
     @@@groovy
-      import groovy.json.*
+    import groovy.xml.*
        
-      println new JsonBuilder().book{
-           name("groovy in action")
-           isbn("9781935182443")
-      }
+    writer = new StringWriter()
 
-<!SLIDE  execute>
+    new MarkupBuilder(writer).books{
+      book(name:"groovy in action", isbn:"9781935182443")
+      book(name:"Joy of Clojure", isbn:"1935182641")
+    }
+
+    println writer
+
+<!SLIDE  execute smaller>
 .notes Another example is constructing an http request.
 
     @@@groovy
-     @Grab(group="org.codehaus.groovy.modules.http-builder",
-           module="http-builder", version="0.5.1" ) 
-      import groovyx.net.http.HTTPBuilder
-      import static groovyx.net.http.Method.GET
-      import static groovyx.net.http.ContentType.HTML
- 
-      def http = new HTTPBuilder("http://ajax.googleapis.com")
+    import java.awt.FlowLayout 
+    import javax.swing.* 
+    import groovy.swing.SwingBuilder  
 
-	http.request( GET, JSON ) {
-	  uri.path = "/ajax/services/search/web"
-	  uri.query = [v:"1.0", q:"Calvin and Hobbes"]
-        headers."User-Agent" = "Mozilla/5.0 Ubuntu/8.10 Firefox/3.0.4"
+     builder = new SwingBuilder()
 
-       response.success = { resp, json ->
-          println resp.status
-          json.responseData.results.each { 
-             println "${it.titleNoFormatting} : ${it.visibleUrl}"
-          }
-       }
-
-       response.failure = { resp ->
-         println "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}" 
-       }
-    }
-
+     builder.frame(title:"Swinging with Groovy!", size:[290,100]) { 
+      panel(layout:new FlowLayout()) { 
+        ["Groovy", "Ruby", "Python"].each{
+          checkBox(text:it)
+        } 
+      } 
+     }.show() 
