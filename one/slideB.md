@@ -50,7 +50,7 @@
 
 <!SLIDE title-slide>
 
-# Groovy Builders #
+# Builders #
 
 <!SLIDE  execute small>
 .notes Groovy builders use the builder pattern to construct all sorts of hierarchal tree structures, in this case XML
@@ -84,3 +84,5 @@
         } 
       } 
      }.show() 
+
+
