@@ -46,3 +46,37 @@
       }
       // ... 
     } 
+
+<!SLIDE smaller execute>
+.notes Each object has a meta class (even interfaces), meta class holds introspection and dynamic invocation methods.
+
+    @@@groovy
+      [String,List,"hello"].each {
+        println it.metaClass.name
+      }
+       
+      objectMethods = Object.methods.collect{it.name}
+
+      interestingMethods = "hello".metaClass.class.methods.grep {
+         !objectMethods.contains(it.name)
+      }
+       
+      println interestingMethods.collect {it.name}
+
+<!SLIDE smaller execute>
+.notes Default metaClass on String is the ExpandoMetaClass which expands upon assignment (there are other implementations).
+
+    @@@groovy
+      String.metaClass.capitelize = {// -1 is the one before 0 
+
+          "${delegate[0].toUpperCase()}${delegate[1..-1]}"
+      } 
+
+      println "hello".capitelize()
+
+      "hello".metaClass.bye = {println "bye"} // change per instance
+
+      "hello".bye()
+      
+      "bye".bye() // wont work
+     
