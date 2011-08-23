@@ -64,19 +64,42 @@
       println interestingMethods.collect {it.name}
 
 <!SLIDE smaller execute>
-.notes Default metaClass on String is the ExpandoMetaClass which expands upon assignment (there are other implementations).
+.notes Category offers us the ability to MOP on a limited scope (single thread scope).
 
     @@@groovy
-      String.metaClass.capitelize = {// -1 is the one before 0 
-
-          "${delegate[0].toUpperCase()}${delegate[1..-1]}"
+      class StringCategory {
+        static String lower(String string) {
+          return string.toLowerCase()
+        }
+      }
+  
+      use(StringCategory) {
+        println "TeSt".lower()
       } 
+         
 
-      println "hello".capitelize()
-
-      "hello".metaClass.bye = {println "bye"} // change per instance
-
-      "hello".bye()
+<!SLIDE smaller execute>
+.notes We can manipulate classes also by using Mixins, note that mixin is not an is-a relationship.
+    @@@groovy
+      class Logable {
+        def info(message) {println message}
+      }
       
-      "bye".bye() // wont work
-     
+      class Chatty {
+         def talk(){
+           info("im alive!")
+         }
+      }
+
+      @Mixin(Logable)
+      class ChattyIntrusive {
+         def talk(){
+           info("im alive!")
+         }
+      }
+
+      Chatty.mixin Logable
+      new Chatty().talk()
+      new ChattyIntrusive().talk() 
+       
+
