@@ -85,4 +85,30 @@
       } 
      }.show() 
 
+<!SLIDE title-slide>
 
+# Syntax tidbits #
+
+<!SLIDE  execute smaller>
+.notes Easy initialization
+
+    @@@groovy
+     class Foo {
+      def a
+      def b
+     }
+
+     println new Foo(a:1, b:2).dump()
+
+<!SLIDE  execute smaller>
+.notes multiple assignment
+
+    @@@groovy
+      def multiReturn(){
+         [1,2,3]
+      }
+
+      (a,b,c) = multiReturn()
+
+      println a + b + c
+       

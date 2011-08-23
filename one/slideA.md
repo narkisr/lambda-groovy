@@ -4,7 +4,7 @@
 <!SLIDE bullets>
 
 * Introduction 
-* Literals, Lambdas, Operators
+* Literals, Lambdas, Operators, Syntax tidbits.
 * The GDK
 * Builders
 * MOP
@@ -12,7 +12,7 @@
 
 
 <!SLIDE bullets>
-# Introduction
+# Introduction 
 
 * Created in 2003
 * Dynamic Language with optional typing
