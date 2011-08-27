@@ -8,7 +8,7 @@
 * The GDK
 * Builders
 * MOP
-* AST transformations (Mixins, Delegation)
+* AST transformations 
 
 
 <!SLIDE bullets>

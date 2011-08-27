@@ -1,2 +1,0 @@
-<!SLIDE title>
-# AST Transformations #
