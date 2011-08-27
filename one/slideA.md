@@ -15,7 +15,7 @@
 # Introduction 
 
 * Created in 2003
-* Dynamic Language with optional typing
+* Dynamic Language with "optional typing"
 * Java super set
 * Batteries included
 
