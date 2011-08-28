@@ -3,10 +3,10 @@
 
 <!SLIDE bullets>
 
-* Parallel collections
+* Parallel collections 
 * Map reduce
 * Dataflow
-* Actors
+* Actors (will not cover)
 * Agents
 
 
@@ -41,3 +41,84 @@
            grouped.getParallel().map{it.value=it.value.size();it}.sort{-it.value}.collection 
          } 
        }
+
+<!SLIDE title-slide>
+# Dataflow #
+Operations (in Dataflow programs) consist of "black boxes" with inputs and outputs, all of which are always explicitly defined.
+
+ They run as soon as all of their inputs become valid, as opposed to when the program encounters them.
+
+ Whereas a traditional program essentially consists of a series of statements saying "do this, now do this", a dataflow program is more like a series of workers on an assembly line, who will do their assigned task as soon as the materials arrive.
+
+ This is why dataflow languages are inherently parallel; the operations have no hidden state to keep track of, and the operations are all "ready" at the same time.
+
+<!SLIDE bullets >
+*  No race-conditions
+*  No live-locks
+*  Deterministic deadlocks
+*  Completely deterministic programs
+*  BEAUTIFUL code.
+
+<!SLIDE smaller execute>
+.notes Three green thread (task) cooperating on 3 DataFlowVariable's.
+    @@@groovy
+     import groovyx.gpars.dataflow.DataFlowVariable as WAIT
+     import static groovyx.gpars.dataflow.DataFlow.task
+
+     WAIT<Integer> x = new WAIT() // each of these is a logical channel
+     WAIT<Integer> y = new WAIT()
+     WAIT<Integer> z = new WAIT()
+
+     task {// a task is a logical work unit
+
+        z << x.val + y.val // x.val,y.val blocks until they have been set
+
+     }
+
+     task { x << 40 }
+     task { y << 2 }
+
+     println "z=${z.val}"
+     assert 42 == z.val
+
+
+<!SLIDE smaller execute>
+.notes Sieve of Eratosthenes mimicking golang style, flow is (generate nums 1, 2, 3, 4, 5, ...) -> (filter by mod 2) -> ... -> (caution! Primes falling out here).
+
+    @@@groovy
+      import static groovyx.gpars.dataflow.DataFlow.task 
+      import groovyx.gpars.dataflow.DataFlowQueue
+      
+      
+      def generate(ch) {
+          {->
+              for (i in (2..10000)) {
+                  ch << i
+              }
+          }
+      }
+
+      def filter(inChannel, outChannel, int prime) {
+          {->
+              for (;;) {
+                  def number = inChannel.val
+                  if (number % prime != 0) {
+                      outChannel << number
+                  }
+              }
+          }
+      }
+      
+      
+      final DataFlowQueue origin = new DataFlowQueue() // multi assigned channel
+      task generate(origin)
+      10.times {
+        int prime = origin.val
+        println prime
+        def multiFiltered = new DataFlowQueue()
+        task filter(origin, multiFiltered, prime)
+        origin = multiFiltered
+      }
+      
+      
+      
