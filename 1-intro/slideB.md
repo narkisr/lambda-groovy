@@ -85,6 +85,36 @@
       } 
      }.show() 
 
+<!SLIDE smaller>
+.notes In order to create our builder we need to extend BuilderSupport, this builder creates a nested nodes list.
+
+    @@@groovy
+     public class NodeBuilder extends BuilderSupport {
+ 
+       protected void setParent(Object parent, Object child) {
+       }
+    
+       protected Object createNode(Object name) {
+           return new Node(getCurrentNode(), name, new ArrayList());
+       }
+    
+       protected Object createNode(Object name, Object value) {
+           return new Node(getCurrentNode(), name, value);
+       }
+    
+       protected Object createNode(Object name, Map attributes) {
+           return new Node(getCurrentNode(), name, attributes, new ArrayList());
+       }
+    
+       protected Object createNode(Object name, Map attributes, Object value) {
+           return new Node(getCurrentNode(), name, attributes, value);
+       }
+    
+       protected Node getCurrentNode() {
+           return (Node) getCurrent();
+       }
+     }
+
 <!SLIDE title-slide>
 
 # Syntax tidbits #
