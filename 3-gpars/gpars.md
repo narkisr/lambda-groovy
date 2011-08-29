@@ -38,7 +38,10 @@
          withPool { 
            def grouped = arg.parallel.map{[it, 1]}.groupBy{it[0]}
            println grouped
-           grouped.getParallel().map{it.value=it.value.size();it}.sort{-it.value}.collection 
+           grouped.getParallel().map{
+              it.value=it.value.size()
+              it
+           }.sort{-it.value}.collection 
          } 
        }
 
@@ -89,7 +92,6 @@ Operations (in Dataflow programs) consist of "black boxes" with inputs and outpu
       import static groovyx.gpars.dataflow.DataFlow.task 
       import groovyx.gpars.dataflow.DataFlowQueue
       
-      
       def generate(ch) {
           {->
               for (i in (2..10000)) {
@@ -109,7 +111,6 @@ Operations (in Dataflow programs) consist of "black boxes" with inputs and outpu
           }
       }
       
-      
       final DataFlowQueue origin = new DataFlowQueue() // multi assigned channel
       task generate(origin)
       10.times {
@@ -119,6 +120,3 @@ Operations (in Dataflow programs) consist of "black boxes" with inputs and outpu
         task filter(origin, multiFiltered, prime)
         origin = multiFiltered
       }
-      
-      
-      
