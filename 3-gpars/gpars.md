@@ -120,3 +120,37 @@ Operations (in Dataflow programs) consist of "black boxes" with inputs and outpu
         task filter(origin, multiFiltered, prime)
         origin = multiFiltered
       }
+
+<!SLIDE smaller execute>
+.notes inspired  by Clojure, an agent is like an actor that processes functions serially on mutable data.
+
+    @@@groovy
+     import groovyx.gpars.agent.Agent
+
+     num = new Agent([0])  
+
+     num.send {it[0]=2}  
+
+     println num.val // blocks until all messages consumed
+
+<!SLIDE smaller execute>
+.notes valAsync returns a snapshoot of the underlying state
+
+    @@@groovy
+      import groovyx.gpars.agent.Agent
+
+      numbers = new Agent([])
+      numbers.send {it.add 1} 
+
+      t1 = Thread.start { numbers.send {it.add 2} }
+
+      t2 = Thread.start { 
+               numbers {it.add 3} 
+               numbers {it.add 4} 
+      }
+
+      numbers.valAsync {println "Current members: $it"}
+      [t1, t2]*.join() 
+      println numbers.val 
+
+
