@@ -64,6 +64,16 @@
       println interestingMethods.collect {it.name}
 
 <!SLIDE smaller execute>
+.notes Here we add a method/property to String, this is similar to ruby open classes notion
+    @@@groovy
+      String.metaClass.upper =  {-> toUpperCase() }
+      String.metaClass.foo = 1 // property
+    
+      println "bla".upper()
+      println "bla".foo
+
+
+<!SLIDE smaller execute>
 .notes Category offers us the ability to MOP on a limited scope (single thread scope).
 
     @@@groovy
