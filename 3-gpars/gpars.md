@@ -121,6 +121,9 @@ Operations (in Dataflow programs) consist of "black boxes" with inputs and outpu
         origin = multiFiltered
       }
 
+<!SLIDE title>
+# Agents #
+
 <!SLIDE smaller execute>
 .notes inspired  by Clojure, an agent is like an actor that processes functions serially on mutable data.
 
@@ -129,7 +132,7 @@ Operations (in Dataflow programs) consist of "black boxes" with inputs and outpu
 
      num = new Agent([0])  
 
-     num.send {it[0]=2}  
+     num.send {it[0] = 2}  
 
      println num.val // blocks until all messages consumed
 
