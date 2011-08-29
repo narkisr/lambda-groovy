@@ -9,6 +9,7 @@
 * Builders
 * MOP
 * AST transformations 
+* GPars
 
 
 <!SLIDE bullets>
