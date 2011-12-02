@@ -5,4 +5,4 @@ In order to view it install this forked showoff version (adds support for Groovy
 
  https://github.com/narkisr/showoff
 
-
+A static version (no code evaluation) can be found [here](http://narkisr.github.com/lambda-groovy/#1).
