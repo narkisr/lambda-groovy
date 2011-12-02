@@ -35,7 +35,7 @@
 
      while(true); 
 
-  
+
 <!SLIDE smaller>
 .notes Implementing a custom transformation requires us to implement an AST visitor, we are using a builder to construct the AST (or build from String/Code).
 
@@ -74,13 +74,13 @@
 
 <!SLIDE execute smaller>
 .notes And it works, at this point we can view it in AST viewer and see the changes
-   
+
     @@@groovy
       class Bla {
         @Printer
         def action(){
         }
       }
-       
+
       new Bla().action()
-       
+

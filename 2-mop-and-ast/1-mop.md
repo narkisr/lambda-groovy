@@ -19,7 +19,7 @@
       public void setMetaClass(MetaClass metaClass);
 
     }
-   
+
 <!SLIDE smaller>
 .notes Default implementation of GroovyObject
 
@@ -54,21 +54,22 @@
       [String,List,"hello"].each {
         println it.metaClass.name
       }
-       
+
       objectMethods = Object.methods.collect{it.name}
 
       interestingMethods = "hello".metaClass.class.methods.grep {
          !objectMethods.contains(it.name)
       }
-       
+
       println interestingMethods.collect {it.name}
 
 <!SLIDE smaller execute>
 .notes Here we add a method/property to String, this is similar to ruby open classes notion
+
     @@@groovy
       String.metaClass.upper =  {-> toUpperCase() }
       String.metaClass.foo = 1 // property
-    
+
       println "bla".upper()
       println "bla".foo
 
@@ -82,19 +83,20 @@
           return string.toLowerCase()
         }
       }
-  
+
       use(StringCategory) {
         println "TeSt".lower()
       } 
-         
+
 
 <!SLIDE smaller execute>
 .notes We can manipulate classes also by using Mixins, note that mixin is not an is-a relationship.
+
     @@@groovy
       class Logable {
         def info(message) {println message}
       }
-      
+
       class Chatty {
          def talk(){
            info("im alive!")
@@ -111,5 +113,5 @@
       Chatty.mixin Logable
       new Chatty().talk()
       new ChattyIntrusive().talk() 
-       
+
 

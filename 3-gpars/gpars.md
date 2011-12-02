@@ -12,6 +12,7 @@
 
 <!SLIDE smaller execute>
 .notes The following uses jsr-166 fork join behind the scenes, making the collect and fold run in parallel
+
     @@@groovy
       import groovyx.gpars.GParsPool 
       GParsPool.withPool {
@@ -28,6 +29,7 @@
 
 <!SLIDE smaller execute>
 .notes Using Map/Reduce DSL might operate better when multiple steps are needed on a single collection.
+
     @@@groovy
        import static groovyx.gpars.GParsPool.withPool
 
@@ -64,6 +66,7 @@ Operations (in Dataflow programs) consist of "black boxes" with inputs and outpu
 
 <!SLIDE smaller execute>
 .notes Three green thread (task) cooperating on 3 DataFlowVariable's.
+
     @@@groovy
      import groovyx.gpars.dataflow.DataFlowVariable as WAIT
      import static groovyx.gpars.dataflow.DataFlow.task
@@ -91,7 +94,7 @@ Operations (in Dataflow programs) consist of "black boxes" with inputs and outpu
     @@@groovy
       import static groovyx.gpars.dataflow.DataFlow.task 
       import groovyx.gpars.dataflow.DataFlowQueue
-      
+
       def generate(ch) {
           {->
               for (i in (2..10000)) {
@@ -110,7 +113,7 @@ Operations (in Dataflow programs) consist of "black boxes" with inputs and outpu
               }
           }
       }
-      
+
       final DataFlowQueue origin = new DataFlowQueue() // multi assigned channel
       task generate(origin)
       10.times {

@@ -24,6 +24,7 @@
 <!SLIDE  execute>
 # Literals #
 .notes List map and regex literals
+
     @@@groovy
         list = [1,2,3]
 
@@ -84,9 +85,10 @@
        say.delegate = [m:2]
 
        say()
-         
+
 <!SLIDE  execute>
 .notes Behind the scenes the delegate is manipulated
+
     @@@groovy
        person = [name:"bob",last:"builder"]
 
