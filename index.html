@@ -1,0 +1,662 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Presentation</title>
+
+  <meta name="viewport" content="width=device-width"/>
+
+  <link rel="stylesheet" href="./css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="./css/showoff.css" type="text/css"/>
+
+  <script type="text/javascript" src="./js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="./js/jquery-print.js"></script>
+  <script type="text/javascript" src="./js/jquery.batchImageLoad.js"></script>
+
+  <script type="text/javascript" src="./js/jquery.doubletap-0.1.js"></script>
+
+  <script type="text/javascript" src="./js/fg.menu.js"></script>
+  <script type="text/javascript" src="./js/showoff.js"></script>
+  <script type="text/javascript" src="./js/jTypeWriter.js"> </script>
+  <script type="text/javascript" src="./js/sh_main.min.js"></script>
+  <script type="text/javascript" src="./js/core.js"></script>
+  <script type="text/javascript" src="./js/showoffcore.js"></script>
+  <script type="text/javascript" src="./js/coffee-script.js"></script>
+
+  <link type="text/css" href="./css/fg.menu.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/theme/ui.all.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/sh_style.css" rel="stylesheet" >
+
+  
+
+  
+
+  <script type="text/javascript">
+  $(function(){
+      setupPreso(false, './');
+  });
+  </script>
+
+</head>
+
+<body>
+
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="navmenu"><span class="ui-icon ui-icon-triangle-1-s"></span>slides</a>
+<div id="navigation" class="hidden"></div>
+
+<div id="help">
+  <table>
+    <tr><td class="key">z, ?</td><td>toggle help (this)</td></tr>
+    <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
+    <tr><td class="key">shift-space, &larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">d</td><td>toggle debug mode</td></tr>
+    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
+    <tr><td class="key">c, t</td><td>table of contents (vi)</td></tr>
+    <tr><td class="key">f</td><td>toggle footer</td></tr>
+    <tr><td class="key">r</td><td>reload slides</td></tr>
+    <tr><td class="key">n</td><td>toggle notes</td></tr>
+    <tr><td class="key">p</td><td>run preshow</td></tr>
+  </table>
+</div>
+
+<div class="buttonNav">
+  <input type="submit" onClick="prevStep();" value="prev"/>
+  <input type="submit" onClick="nextStep();" value="next"/>
+</div>
+
+<div id="preso">loading presentation...</div>
+<div id="footer">
+  <span id="slideInfo"></span>
+  <span id="debugInfo"></span>
+  <span id="notesInfo"></span>
+</div>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div class="slide" data-transition="none"><div class="content title-slide" ref="./1-intro/slideA/1">
+<h1>Groovy</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="./1-intro/slideA/2">
+<ul>
+<li>Introduction </li>
+<li>Literals, Lambdas, Operators, Syntax tidbits.</li>
+<li>The GDK</li>
+<li>Builders</li>
+<li>MOP</li>
+<li>AST transformations </li>
+<li>GPars</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="./1-intro/slideA/3">
+<h1>Introduction</h1>
+
+<ul>
+<li>Created in 2003</li>
+<li>Dynamic Language with "optional typing"</li>
+<li>Java super set</li>
+<li>Batteries included</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideA/4">
+<h1>Literals</h1>
+
+<p class="notes">List map and regex literals</p>
+
+<pre class="sh_groovy"><code>    list = [1,2,3]
+
+    map = [one:1, two:2]
+
+    println "1234" ==~ /\d+/</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title-slide" ref="./1-intro/slideA/5">
+<h1>Lambdas</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideA/6">
+<p class="notes">Closures are first class in Groovy, they are objects.</p>
+
+<pre class="sh_groovy"><code>   say = {m -&gt; println m}
+
+   say("hello")
+
+   println say instanceof Closure</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideA/7">
+<p class="notes">Two conventions: when closure is last it can be written out of parentheses (useful in builders), a single closure parameter is implicit "it".</p>
+
+<pre class="sh_groovy"><code>   def apply(name,action){
+     action(name)
+   }
+
+   apply("hello"){v -&gt; println v }
+
+   apply("hello"){println it}</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideA/8">
+<p class="notes">A closure has a couple of interesting properties, including delegate and owner</p>
+
+<pre class="sh_groovy"><code>   class Owner {
+      def say = {m -&gt; println m}
+   }
+
+   def o = new Owner()
+
+   println o.say.metaClass.properties.collect{
+     it.name
+   }
+
+   println o.say.owner == o 
+
+   println o.say.delegate </code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideA/9">
+<p class="notes">We can manipulate the delegate, opening a set of interesting options (like in DSL's).</p>
+
+<pre class="sh_groovy"><code>   def say = {println m}
+
+   say.delegate = [m:2]
+
+   say()</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideA/10">
+<p class="notes">Behind the scenes the delegate is manipulated</p>
+
+<pre class="sh_groovy"><code>   person = [name:"bob",last:"builder"]
+
+   person.with {// changing delegate
+    println "${name}-${last}"
+   }</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title-slide" ref="./1-intro/slideB/1">
+<h1>Operators</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideB/2">
+<p class="notes">Here we see an example of method ref, we can referecne object methods directly</p>
+
+<pre class="sh_groovy"><code>   value = String.&amp;valueOf 
+
+   println value.class
+
+   println value(true).class</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideB/3">
+<p class="notes">Elvis operator supplies default when value is null, the safe navigation operator saves us from all those ifs</p>
+
+<pre class="sh_groovy"><code>  person = [name:"bob",last:"builder",birth:null]
+
+  println person.birth ?: new Date() // elvis
+
+  println person.birth?.toString() // safe nav</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title-slide" ref="./1-intro/slideB/4">
+<h1>The Groovy JDK (GDK)</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideB/5">
+<p class="notes">Groovy enriches Java types making it more Groovy!, both readLines and first don't exist in Java.</p>
+
+<pre class="sh_groovy"><code>  path = "/home/ronen/.zshrc"
+
+  println new File(path).readLines().first()</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./1-intro/slideB/6">
+<p class="notes">Collection types have a slew of functional methods added to them</p>
+
+<pre class="sh_groovy"><code>  multipleOfTwo = [1, 2, 3].collect{it * 2} 
+
+  sum = multipleOfTwo.inject(0){acc, v -&gt;
+     acc +=v
+  }
+
+  println multipleOfTwo
+
+  println sum</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title-slide" ref="./1-intro/slideB/7">
+<h1>Builders</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute small" ref="./1-intro/slideB/8">
+<p class="notes">Groovy builders use the builder pattern to construct all sorts of hierarchal tree structures, in this case XML</p>
+
+<pre class="sh_groovy"><code>import groovy.xml.*
+
+writer = new StringWriter()
+
+new MarkupBuilder(writer).books{
+  book(name:"groovy in action", isbn:"9781935182443")
+  book(name:"Joy of Clojure", isbn:"1935182641")
+}
+
+println writer</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute smaller" ref="./1-intro/slideB/9">
+<p class="notes">Another use case is Swing UI</p>
+
+<pre class="sh_groovy"><code>import java.awt.FlowLayout 
+import javax.swing.* 
+import groovy.swing.SwingBuilder  
+
+ builder = new SwingBuilder()
+
+ builder.frame(title:"Swinging with Groovy!", size:[290,100]) { 
+  panel(layout:new FlowLayout()) { 
+    ["Groovy", "Ruby", "Python"].each{
+      checkBox(text:it)
+    } 
+  } 
+ }.show() </code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller" ref="./1-intro/slideB/10">
+<p class="notes">In order to create our builder we need to extend BuilderSupport, this builder creates a nested nodes list.</p>
+
+<pre class="sh_groovy"><code> public class NodeBuilder extends BuilderSupport {
+
+   protected void setParent(Object parent, Object child) {
+   }
+
+   protected Object createNode(Object name) {
+       return new Node(getCurrentNode(), name, new ArrayList());
+   }
+
+   protected Object createNode(Object name, Object value) {
+       return new Node(getCurrentNode(), name, value);
+   }
+
+   protected Object createNode(Object name, Map attributes) {
+       return new Node(getCurrentNode(), name, attributes, new ArrayList());
+   }
+
+   protected Object createNode(Object name, Map attributes, Object value) {
+       return new Node(getCurrentNode(), name, attributes, value);
+   }
+
+   protected Node getCurrentNode() {
+       return (Node) getCurrent();
+   }
+ }</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title-slide" ref="./1-intro/slideB/11">
+<h1>Syntax tidbits</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute smaller" ref="./1-intro/slideB/12">
+<p class="notes">Easy initialization</p>
+
+<pre class="sh_groovy"><code> class Foo {
+  def a
+  def b
+ }
+
+ println new Foo(a:1, b:2).dump()</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute smaller" ref="./1-intro/slideB/13">
+<p class="notes">multiple assignment</p>
+
+<pre class="sh_groovy"><code>  def multiReturn(){
+     [1,2,3]
+  }
+
+  (a,b,c) = multiReturn()
+
+  println a + b + c</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title-slide" ref="./2-mop-and-ast/1-mop/1">
+<h1>MOP</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller" ref="./2-mop-and-ast/1-mop/2">
+<p class="notes">All Groovy object method calls are routed through MOP calls (including java objects called from within Groovy).</p>
+
+<pre class="sh_groovy"><code>public interface GroovyObject {
+
+  public Object invokeMethod(String methodName, Object args);
+
+  public Object getProperty(String propertyName);
+
+  public void setProperty(String propertyName, Object newValue);
+
+  public MetaClass getMetaClass();
+
+  public void setMetaClass(MetaClass metaClass);
+
+}</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller" ref="./2-mop-and-ast/1-mop/3">
+<p class="notes">Default implementation of GroovyObject</p>
+
+<pre class="sh_groovy"><code>public abstract class GroovyObjectSupport implements GroovyObject {
+
+  // never persist the MetaClass
+  private transient MetaClass metaClass;
+
+  public GroovyObjectSupport() {
+     this.metaClass = InvokerHelper.getMetaClass(this.getClass());
+  }
+
+  public Object getProperty(String property) {
+     return getMetaClass().getProperty(this, property);
+  }
+
+  public void setProperty(String property, Object newValue) {
+     getMetaClass().setProperty(this, property, newValue);
+  }
+
+  public Object invokeMethod(String name, Object args) {
+     return getMetaClass().invokeMethod(this, name, args);
+  }
+  // ... 
+} </code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./2-mop-and-ast/1-mop/4">
+<p class="notes">Each object has a meta class (even interfaces), meta class holds introspection and dynamic invocation methods.</p>
+
+<pre class="sh_groovy"><code>  [String,List,"hello"].each {
+    println it.metaClass.name
+  }
+
+  objectMethods = Object.methods.collect{it.name}
+
+  interestingMethods = "hello".metaClass.class.methods.grep {
+     !objectMethods.contains(it.name)
+  }
+
+  println interestingMethods.collect {it.name}</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./2-mop-and-ast/1-mop/5">
+<p class="notes">Here we add a method/property to String, this is similar to ruby open classes notion</p>
+
+<pre class="sh_groovy"><code>  String.metaClass.upper =  {-&gt; toUpperCase() }
+  String.metaClass.foo = 1 // property
+
+  println "bla".upper()
+  println "bla".foo</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./2-mop-and-ast/1-mop/6">
+<p class="notes">Category offers us the ability to MOP on a limited scope (single thread scope).</p>
+
+<pre class="sh_groovy"><code>  class StringCategory {
+    static String lower(String string) {
+      return string.toLowerCase()
+    }
+  }
+
+  use(StringCategory) {
+    println "TeSt".lower()
+  } </code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./2-mop-and-ast/1-mop/7">
+<p class="notes">We can manipulate classes also by using Mixins, note that mixin is not an is-a relationship.</p>
+
+<pre class="sh_groovy"><code>  class Logable {
+    def info(message) {println message}
+  }
+
+  class Chatty {
+     def talk(){
+       info("im alive!")
+     }
+  }
+
+  @Mixin(Logable)
+  class ChattyIntrusive {
+     def talk(){
+       info("im alive!")
+     }
+  }
+
+  Chatty.mixin Logable
+  new Chatty().talk()
+  new ChattyIntrusive().talk() </code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title" ref="./2-mop-and-ast/2-ast/1">
+<h1>AST Transformations</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute smaller" ref="./2-mop-and-ast/2-ast/2">
+<p class="notes">This transformation adds toString hashCode equals and tuple constructor</p>
+
+<pre class="sh_groovy"><code> import groovy.transform.Canonical
+
+ @Canonical class Foo {
+   def lets,play
+ }
+
+ println new Foo("lets","play").equals(new Foo("lets","play"))</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute smaller" ref="./2-mop-and-ast/2-ast/3">
+<p class="notes">Lazy initialization of data members</p>
+
+<pre class="sh_groovy"><code>  class Container {
+    @Lazy def expensive = {println "Im so precious!"}
+  }
+  c =  new Container()
+  println "nothing happend yet!"
+  c.expensive() </code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute" ref="./2-mop-and-ast/2-ast/4">
+<p class="notes">The following enables us to use Groovy script as safe extension language in larger programms.</p>
+
+<pre class="sh_groovy"><code> @TimedInterrupt(value=1)
+ import groovy.transform.TimedInterrupt
+
+ while(true); </code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller" ref="./2-mop-and-ast/2-ast/5">
+<p class="notes">Implementing a custom transformation requires us to implement an AST visitor, we are using a builder to construct the AST (or build from String/Code).</p>
+
+<pre class="sh_groovy"><code> @Retention (RetentionPolicy.SOURCE)
+ @Target ([ElementType.METHOD])
+ @GroovyASTTransformationClass (["PrinterTransformation"])
+ public @interface Printer { }
+
+ @GroovyASTTransformation(phase = CompilePhase.SEMANTIC_ANALYSIS)
+ class PrinterTransformation implements ASTTransformation {
+
+  void visit(ASTNode[] astNodes, SourceUnit sourceUnit) {
+
+    if(!astNodes || !astNodes[0] || !(astNodes[1] instanceof MethodNode)){
+       return
+    }
+
+    MethodNode annotatedMethod = astNodes[1]
+    def printStatment = new AstBuilder().buildFromSpec {
+      expression {
+        methodCall {
+          variable "this"
+          constant "println"
+          argumentList {
+            constant "Hey!"
+          }
+        }
+      }
+    }
+
+   List&lt;Statement&gt; statements = annotatedMethod.getCode().getStatements()
+   statements.add(printStatment[0])
+  }
+ }</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content execute smaller" ref="./2-mop-and-ast/2-ast/6">
+<p class="notes">And it works, at this point we can view it in AST viewer and see the changes</p>
+
+<pre class="sh_groovy"><code>  class Bla {
+    @Printer
+    def action(){
+    }
+  }
+
+  new Bla().action()</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title-slide" ref="./3-gpars/gpars/1">
+<h1>GPars</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="./3-gpars/gpars/2">
+<ul>
+<li>Parallel collections </li>
+<li>Map reduce</li>
+<li>Dataflow</li>
+<li>Actors (will not cover)</li>
+<li>Agents</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./3-gpars/gpars/3">
+<p class="notes">The following uses jsr-166 fork join behind the scenes, making the collect and fold run in parallel</p>
+
+<pre class="sh_groovy"><code>  import groovyx.gpars.GParsPool 
+  GParsPool.withPool {
+
+    def seq = (1..10).makeTransparent()
+    def squareSum = seq.collect {
+      println Thread.currentThread()
+      it*it
+     }.fold(0) {a,v-&gt; a+v}
+    println squareSum
+
+  }</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./3-gpars/gpars/4">
+<p class="notes">Using Map/Reduce DSL might operate better when multiple steps are needed on a single collection.</p>
+
+<pre class="sh_groovy"><code>   import static groovyx.gpars.GParsPool.withPool
+
+   def words = "lets count"
+   println count(words)
+
+   def count(arg) { 
+     withPool { 
+       def grouped = arg.parallel.map{[it, 1]}.groupBy{it[0]}
+       println grouped
+       grouped.getParallel().map{
+          it.value=it.value.size()
+          it
+       }.sort{-it.value}.collection 
+     } 
+   }</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title-slide" ref="./3-gpars/gpars/5">
+<h1>Dataflow</h1>
+
+<p>Operations (in Dataflow programs) consist of "black boxes" with inputs and outputs, all of which are always explicitly defined.</p>
+
+<p>They run as soon as all of their inputs become valid, as opposed to when the program encounters them.</p>
+
+<p>Whereas a traditional program essentially consists of a series of statements saying "do this, now do this", a dataflow program is more like a series of workers on an assembly line, who will do their assigned task as soon as the materials arrive.</p>
+
+<p>This is why dataflow languages are inherently parallel; the operations have no hidden state to keep track of, and the operations are all "ready" at the same time.</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="./3-gpars/gpars/6">
+<ul>
+<li> No race-conditions</li>
+<li> No live-locks</li>
+<li> Deterministic deadlocks</li>
+<li> Completely deterministic programs</li>
+<li> BEAUTIFUL code.</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./3-gpars/gpars/7">
+<p class="notes">Three green thread (task) cooperating on 3 DataFlowVariable's.</p>
+
+<pre class="sh_groovy"><code> import groovyx.gpars.dataflow.DataFlowVariable as WAIT
+ import static groovyx.gpars.dataflow.DataFlow.task
+
+ WAIT&lt;Integer&gt; x = new WAIT() // each of these is a logical channel
+ WAIT&lt;Integer&gt; y = new WAIT()
+ WAIT&lt;Integer&gt; z = new WAIT()
+
+ task {// a task is a logical work unit
+
+    z &lt;&lt; x.val + y.val // x.val,y.val blocks until they have been set
+
+ }
+
+ task { x &lt;&lt; 40 }
+ task { y &lt;&lt; 2 }
+
+ println "z=${z.val}"
+ assert 42 == z.val</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./3-gpars/gpars/8">
+<p class="notes">Sieve of Eratosthenes mimicking golang style, flow is (generate nums 1, 2, 3, 4, 5, ...) -&gt; (filter by mod 2) -&gt; ... -&gt; (caution! Primes falling out here).</p>
+
+<pre class="sh_groovy"><code>  import static groovyx.gpars.dataflow.DataFlow.task 
+  import groovyx.gpars.dataflow.DataFlowQueue
+
+  def generate(ch) {
+      {-&gt;
+          for (i in (2..10000)) {
+              ch &lt;&lt; i
+          }
+      }
+  }
+
+  def filter(inChannel, outChannel, int prime) {
+      {-&gt;
+          for (;;) {
+              def number = inChannel.val
+              if (number % prime != 0) {
+                  outChannel &lt;&lt; number
+              }
+          }
+      }
+  }
+
+  final DataFlowQueue origin = new DataFlowQueue() // multi assigned channel
+  task generate(origin)
+  10.times {
+    int prime = origin.val
+    println prime
+    def multiFiltered = new DataFlowQueue()
+    task filter(origin, multiFiltered, prime)
+    origin = multiFiltered
+  }</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content title" ref="./3-gpars/gpars/9">
+<h1>Agents</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./3-gpars/gpars/10">
+<p class="notes">inspired  by Clojure, an agent is like an actor that processes functions serially on mutable data.</p>
+
+<pre class="sh_groovy"><code> import groovyx.gpars.agent.Agent
+
+ num = new Agent([0])  
+
+ num.send {it[0] = 2}  
+
+ println num.val // blocks until all messages consumed</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller execute" ref="./3-gpars/gpars/11">
+<p class="notes">valAsync returns a snapshoot of the underlying state</p>
+
+<pre class="sh_groovy"><code>  import groovyx.gpars.agent.Agent
+
+  numbers = new Agent([])
+  numbers.send {it.add 1} 
+
+  t1 = Thread.start { numbers.send {it.add 2} }
+
+  t2 = Thread.start { 
+           numbers {it.add 3} 
+           numbers {it.add 4} 
+  }
+
+  numbers.valAsync {println "Current members: $it"}
+  [t1, t2]*.join() 
+  println numbers.val </code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="./4-summary/summary">
+<ul>
+<li>Twitter: @narkisr </li>
+<li>Blog: narkisr.com</li>
+<li>Github: https://github.com/narkisr </li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="./README">
+<h1>Lambda Groovy</h1>
+
+<p>A groovy presentation I gave for the <a href="http://groups.google.com/group/sayeret-lambda?pli=1">Sayeret Lambada</a> group.</p>
+
+<p>In order to view it install this forked showoff version (adds support for Groovy code syntax highlighting and evaluation):</p>
+
+<p>https://github.com/narkisr/showoff</p>
+</div>
+</div></div>
+
+</body>
+</html>
